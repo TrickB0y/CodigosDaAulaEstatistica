@@ -6,7 +6,7 @@
 //
 //Função int debug
 int debug_calcular_amplitude_total_int(int *lista, size_t tamanho) {
-    printf_s("size: %d\n\n", tamanho);
+    printf_s("size: %zd\n\n", tamanho);
     int maior_numero = lista[0];
     int menor_numero = lista[0];
     printf_s("MN: %d\nmN: %d\n\n", maior_numero, menor_numero);
@@ -35,7 +35,7 @@ int calcular_amplitude_total_int(int *lista, size_t tamanho) {
 
 //Função float debug
 float debug_calcular_amplitude_total_float(float *lista, size_t tamanho) {
-    printf_s("size: %d\n", tamanho);
+    printf_s("size: %zd\n", tamanho);
     float maior_numero = lista[0];
     float menor_numero = lista[0];
     printf_s("MN: %f\nmN: %f\n\n", maior_numero, menor_numero);
