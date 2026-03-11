@@ -11,26 +11,29 @@ typedef struct VetorInt
 
 // Função construtura do tipo vetor inteiro.
 // ...
-// Recebe o tamanho que o vetor que será contruido e retorna o ponteiro aonde ele esta localizado ou retorna NULL em caso de falha.
+// saida com codigo -10 = o comprimento não pode ser 0.
+// saida com codigo -11 = falha ao alocar memoria do vetor.
+// ...
+// Recebe o tamanho que o vetor que será contruido e retorna o ponteiro aonde ele esta localizado. encerra o programa com um codigo em caso de erro *olhar possiveis codigos.
 VetorInt *constructorVetorInt(size_t comprimento) {
     if(comprimento == 0)
     {
         printf_s("Erro: o comprimento não pode ser 0.\n");
-        return NULL;
+        exit(-10);
     }
 
     VetorInt *pointerVetor = (struct VetorInt *) calloc(1, sizeof(*pointerVetor));
     if(pointerVetor == NULL) {
         printf_s("Erro: falha ao alocar memoria de vetor.\n");
         free(pointerVetor);
-        return NULL;
+        exit(-11);
     }
 
     pointerVetor->lista = (int *) calloc(comprimento, sizeof(int));
     if(pointerVetor->lista == NULL) {
         printf_s("Erro: falha ao alocar memoria de vetor.\n");
         free(pointerVetor->lista);
-        return NULL;
+        exit(-11);
     }
     pointerVetor->comprimento = comprimento;
 
@@ -51,26 +54,26 @@ void destructorVetorInt(struct VetorInt *vetor) {
 
 // Função para alterar valor de um item do vetor inteiro.
 // ...
-// saida com codigo -10 = index fora dos limites do tamanho do vetor.
+// saida com codigo -12 = index fora dos limites do tamanho do vetor.
 // ...
 // Recebe o ponteiro do vetor de inteiros a ser alterado o index a posição que será alterada e o valor inteiro que sera inserido no espaço. encerra o programa com um codigo em caso de erro *olhar possiveis codigos.
 void setItemVetorInt(struct VetorInt *vetor, size_t index, int valor) {
     if(index >= vetor->comprimento) {
         printf_s("Erro: index fora dos limites do vetor.\n");
-        exit(-10);
+        exit(-12);
     }
     vetor->lista[index] = valor;
 }
 
 // Função para retornar o valor de um item do vetor inteiro.
 // ...
-// saida com codigo -10 = index fora dos limites do tamanho do vetor.
+// saida com codigo -12 = index fora dos limites do tamanho do vetor.
 // ...
 // Recebe o ponteiro do vetor de inteiros que se deseja retornar o valor e a posição do valor a ser retornada. encerra o programa com um codigo em caso de erro *olhar possiveis codigos.
 int getItemVetorInt(struct VetorInt *vetor, size_t index) {
     if(index >= vetor->comprimento) {
         printf_s("Erro: index fora dos limites do vetor.\n");
-        exit(-10);
+        exit(-12);
     }
     return vetor->lista[index];
 }
@@ -84,14 +87,14 @@ size_t getComprimentoVetorInt(struct VetorInt *vetor) {
 
 // Função que apaga um item do vetor e retorna seu valor.
 // ...
-// saida com codigo -10 = index fora dos limites do tamanho do vetor.
+// saida com codigo -12 = index fora dos limites do tamanho do vetor.
 // saida com codigo -11 = falha ao alocar memoria do vetor.
 // ...
 // Recebe o ponteiro do vetor e o indexador da posição desejada. encerra o programa com um codigo em caso de erro *olhar possiveis codigos.
 int popItemVetorInt(struct VetorInt *vetor, size_t index) {
     if(index >= vetor->comprimento) {
         printf_s("Erro: index fora dos limites do vetor.\n");
-        exit(-10);
+        exit(-12);
     }
     int popped = vetor->lista[index];
     for(int i = index; i < vetor->comprimento - 1; i++) {
@@ -142,26 +145,29 @@ void printVetorint(struct VetorInt *vetor) {
 
 // Função construtura do tipo vetor inteiro já populada com dados apartir de uma array já existente.
 // ...
-// Recebe o ponteiro da array já existente o tamanho da mesma array e retorna o ponteiro aonde ele esta localizado ou retorna NULL em caso de falha.
+// saida com codigo -10 = o comprimento não pode ser 0.
+// saida com codigo -11 = falha ao alocar memoria do vetor.
+// ...
+// Recebe o ponteiro da array já existente o tamanho da mesma array e retorna o ponteiro aonde ele esta localizado. encerra o programa com um codigo em caso de erro *olhar possiveis codigos.
 VetorInt *criarVetorIntDeArray(int *array, size_t comprimento) {
     if(comprimento == 0)
     {
         printf_s("Erro: o comprimento não pode ser 0.\n");
-        return NULL;
+        exit(-10);
     }
 
     VetorInt *pointerVetor = (struct VetorInt *) calloc(1, sizeof(*pointerVetor));
     if(pointerVetor == NULL) {
         printf_s("Erro: falha ao alocar memoria de vetor.\n");
         free(pointerVetor);
-        return NULL;
+        exit(-11);
     }
 
     pointerVetor->lista = (int *) calloc(comprimento, sizeof(int));
     if(pointerVetor->lista == NULL) {
         printf_s("Erro: falha ao alocar memoria de vetor.\n");
         free(pointerVetor->lista);
-        return NULL;
+        exit(-11);
     }
     pointerVetor->comprimento = comprimento;
 
@@ -195,6 +201,14 @@ int main(void) {
     printf_s("%zd\n", getComprimentoVetorInt(minha_lista));
     printVetorint(minha_lista);
     printf_s("\n");
+
+    setItemVetorInt(minha_lista, 19, 2);
+
+    printf_s("%zd\n", getComprimentoVetorInt(minha_lista));
+    printVetorint(minha_lista);
+    printf_s("\n");
+
+    printf_s("%d", getItemVetorInt(minha_lista,2));
 
     destructorVetorInt(minha_lista);
     
